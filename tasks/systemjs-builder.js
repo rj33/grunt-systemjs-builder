@@ -88,8 +88,14 @@ module.exports = function (grunt) {
 
         var builder = data.builder,
             options = data.options,
-            src = file.src[0];
 
+        if (options.arithmetic) {
+            // Use the untransformed original src string which allows arithmetic builds using & - etc.
+            src = file.orig.src[0];
+        } else {
+            src = file.src[0];            
+        }
+        
         grunt.verbose.writeln("systemjs-builder-task - about to build source: " + src);
 
         builder[data.buildMethod].call(builder, src, file.dest, options.build)
